@@ -52,19 +52,9 @@ public class Constants {
         public static final String RECORD_DELETED = "record.deleted";
         public static final String EMAIL_ADDRESS_DELETED = "emailAddress.deleted";
         public static final String RECORD_INUSED = "record.inUsed";
-        public static final String RECORD_NOT_EXISTED = "recordNotExits";
-        public static final String POSITION_EXISTED = "positionExits";
-        public static final String POSITION_WAGE_EXISTED = "positionWageExits";
         public static final String DOCUMENT_TYPE_EXISTED = "documentTypeExits";
-        public static final String NOT_ALLOWED_ADD_EMPLOYEE = "employee.notAllowedAddEmployee";
-        public static final String NOT_ALLOWED_DELETE_EMPLOYEE = "employee.notAllowedDeleteEmployee";
         public static final String DUPICATE_DATA_REDUCTION = "taxReduction.duplicateData";
         public static final String PARAMETER_USED = "parameterUsed";
-        public static final String SYS_CAT_TYPE_USED = "sysCatTypeUsed";
-        public static final String ORG_DUPLICATE_CODE = "organization.duplicateCode";
-        public static final String ORG_DUPLICATE_NAME = "organization.duplicateName";
-        public static final String NATION_CONFIG_TYPE_USED = "nationConfigTypeUsed";
-        public static final String EMP_WORK_SCHEDULE_SUCCESS = "empWorkSchedule.success";
         public static final String NOT_ALLOWED_DELETE_DATA_TYPE = "dataType.recordInUsed";
         public static final String NOT_ALLOWED_DELETE_FORMULA = "formula.config.cannotDelete";
         public static final String NOT_ALLOWED_CHANGE_STATUS_FORMULA = "formula.config.cannotChange";
@@ -82,15 +72,10 @@ public class Constants {
         public static final String SUCCESS_SEND = "success.send";
         public static final String SUCCESS_SAVE = "success.save";
         public static final String DELETE_ERROR = "error.delete";
-        public static final String SAVE_DUPLICATECODE = "save.duplicateCode";
-        public static final String DOMAIN_DUPLICATECODE = "permission.duplicateDomain";
-        public static final String EMP_CODE_DUPLICATECODE = "empCodeConfig.duplicatePrefixCode";
+        public static final String SAVE_DUPLICATE_CODE = "save.duplicateCode";
+        public static final String DOMAIN_DUPLICATE_CODE = "permission.duplicateDomain";
         public static final String SYNC_TAX_SUCCESS = "synctax.success";
         public static final String SYNC_TAX_ERROR = "synctax.error";
-        public static final String CREATE_EMP_ID_ERROR = "create.emp.id.error";
-        public static final String CREATE_ORG_ID_ERROR = "create.org.id.error";
-        public static final String REWORK_FAIL = "transferEmployee.rework.Fail";
-        public static final String REWORK_SUCCESS = "transferEmployee.rework.Success";
     }
 
     public static class WARNING_TYPE {
