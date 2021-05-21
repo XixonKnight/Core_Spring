@@ -1,0 +1,19 @@
+#config port.port=80
+#spring-hibernate for mysql
+spring:
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  #connection MySQL
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_foods?useUnicode=yes&characterEncoding=UTF-8
+    username: root
+    password: nhanbn98
+
+server:
+  port:80

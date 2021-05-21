@@ -1,5 +1,7 @@
-package com.example.corespring;
+package com.example.corespring.common;
 
+
+import com.example.corespring.common.CommonUtil;
 
 //{"first":0,"rows":2,"sortField":"isUsed","sortOrder":1,"filters":{},"globalFilter":null}
 public class SearchParams {

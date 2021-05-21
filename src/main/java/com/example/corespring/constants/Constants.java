@@ -1,4 +1,6 @@
-package com.example.corespring;
+package com.example.corespring.constants;
+
+import com.example.corespring.common.CommonUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

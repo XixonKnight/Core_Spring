@@ -1,4 +1,6 @@
-package com.example.corespring;
+package com.example.corespring.common;
+
+import com.example.corespring.constants.Constants;
 
 /**
  * Created by NhanNguyen on 1/18/2021
