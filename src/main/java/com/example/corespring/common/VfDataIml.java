@@ -1,101 +1,107 @@
 package com.example.corespring.common;
 
+import com.example.corespring.domain.DataTableResults;
+import com.example.corespring.domain.SearchParams;
 import com.google.gson.Gson;
-import domain.DataTableResults;
-import org.hibernate.SQLQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
-import org.hibernate.type.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by Nhan Nguyen on 5/19/2021
- *
- * @author Nhan Nguyen
- * @date 5/19/2021
- */
+import java.util.stream.Collectors;
 
 @Component
+@Slf4j
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class VfDataIml implements VfData {
-    private static final Logger LOGGER = LoggerFactory.getLogger(VfDataIml.class);
 
-    @Autowired
-    private EntityManager entityManager;
+    @PersistenceContext
+    final EntityManager entityManager;
 
-    @Autowired
-    private HttpServletRequest req;
+    final HttpServletRequest req;
 
     @Override
     public Session getSession() {
         return entityManager.unwrap(Session.class);
     }
 
+
     @Override
-    public SQLQuery createSQLQuery(String sql) {
-        return getSession().createSQLQuery(sql);
+    @SuppressWarnings("deprecation")
+    public NativeQuery createNativeQuery(String sql) {
+        return getSession().createNativeQuery(sql);
     }
 
     @Override
-    public void setResultTransformer(SQLQuery query, Class obj) {
-        Field[] fileds = obj.getDeclaredFields();
-        Map<String, String> mapFileds = new HashMap();
-        for (Field filed : fileds) {
-            mapFileds.put(filed.getName(), filed.getGenericType().toString());
-        }
+    public void setResultTransformer(NativeQuery<?> query, Class<?> targetClass) {
+        Map<String, String> fieldTypeMap = Arrays.stream(targetClass.getDeclaredFields())
+                .collect(Collectors.toMap(Field::getName, field -> field.getGenericType().toString()));
+
         List<String> aliasColumns = getReturnAliasColumns(query);
-        for (String aliasColumn : aliasColumns) {
-            String dataType = mapFileds.get(aliasColumn);
-            if (dataType == null) {
-                LOGGER.debug(aliasColumn + " is not defined");
-            } else {
-                Type hbmType = null;
-                if ("class java.lang.Long".equals(dataType)) {
-                    hbmType = LongType.INSTANCE;
-                } else if ("class java.lang.Integer".equals(dataType)) {
-                    hbmType = IntegerType.INSTANCE;
-                } else if ("class java.lang.Double".equals(dataType)) {
-                    hbmType = DoubleType.INSTANCE;
-                } else if ("class java.lang.String".equals(dataType)) {
-                    hbmType = StringType.INSTANCE;
-                } else if ("class java.lang.Boolean".equals(dataType)) {
-                    hbmType = BooleanType.INSTANCE;
-                } else if ("class java.util.Date".equals(dataType)) {
-                    hbmType = TimestampType.INSTANCE;
-                }
-                if (hbmType == null) {
-                    LOGGER.debug(dataType + " is not supported");
-                } else {
-                    query.addScalar(aliasColumn, hbmType);
-                }
-            }
-        }
-        query.setResultTransformer(Transformers.aliasToBean(obj));
 
+        for (String alias : aliasColumns) {
+            String type = fieldTypeMap.get(alias);
+
+            if (type == null) {
+                log.debug("{} is not defined in {}", alias, targetClass.getSimpleName());
+                continue;
+            }
+
+            Class<?> scalarType = resolveJavaType(type);
+
+            if (scalarType == null) {
+                log.debug("{} is not supported", type);
+                continue;
+            }
+
+            query.addScalar(alias, scalarType);
+        }
+
+        query.setResultTransformer(Transformers.aliasToBean(targetClass));
     }
 
+    private Class<?> resolveJavaType(String typeName) {
+        return switch (typeName) {
+            case "class java.lang.Long"          -> Long.class;
+            case "class java.lang.Integer"       -> Integer.class;
+            case "class java.lang.Double"        -> Double.class;
+            case "class java.lang.String"        -> String.class;
+            case "class java.lang.Boolean"       -> Boolean.class;
+            case "class java.util.Date",
+                 "class java.time.LocalDateTime" -> LocalDateTime.class;
+            default                              -> null;
+        };
+    }
+
+
+
+
     @Override
-    public List<String> getReturnAliasColumns(SQLQuery query) {
-        List<String> aliasColumns = new ArrayList();
-        String sqlQuery = query.getQueryString();
-        sqlQuery = sqlQuery.replace("\n", " ");
-        sqlQuery = sqlQuery.replace("\t", " ");
+    public List<String> getReturnAliasColumns(NativeQuery query) {
+        List<String> aliasColumns = new ArrayList<>();
+        String NativeQuery = query.getQueryString();
+        NativeQuery = NativeQuery.replace("\n", " ");
+        NativeQuery = NativeQuery.replace("\t", " ");
         int numOfRightPythis = 0;
         int startPythis = -1;
         int endPythis = 0;
         boolean hasRightPythis = true;
         while (hasRightPythis) {
-            char[] arrStr = sqlQuery.toCharArray();
+            char[] arrStr = NativeQuery.toCharArray();
             hasRightPythis = false;
             int idx = 0;
             for (char c : arrStr) {
@@ -118,12 +124,12 @@ public class VfDataIml implements VfData {
                 idx++;
             }
             if (endPythis > 0) {
-                sqlQuery = sqlQuery.substring(0, startPythis) + " # " + sqlQuery.substring(endPythis + 1);
+                NativeQuery = NativeQuery.substring(0, startPythis) + " # " + NativeQuery.substring(endPythis + 1);
                 hasRightPythis = true;
                 endPythis = 0;
             }
         }
-        String arrStr[] = sqlQuery.substring(0, sqlQuery.toUpperCase().indexOf(" FROM ")).split(",");
+        String arrStr[] = NativeQuery.substring(0, NativeQuery.toUpperCase().indexOf(" FROM ")).split(",");
         for (String str : arrStr) {
             String[] temp = str.trim().split(" ");
             String alias = temp[temp.length - 1].trim();
@@ -143,55 +149,94 @@ public class VfDataIml implements VfData {
         return aliasColumns;
     }
 
+
     @Override
-    public <T> DataTableResults<T> findPaginationQuery(String nativeQuery, String nativeQueryCount, String orderBy, List<Object> paramList, Class obj) {
+    public <T> DataTableResults<T> findPaginationQuery(String nativeQuery, String nativeQueryCount, String orderBy, List<Object> paramList, Class<T> obj) {
         return null;
     }
 
     @Override
     public <T> DataTableResults<T> findPaginationQuery(String nativeQuery, String orderBy,
-                                                       List<Object> paramList, Class obj) {
-        return findPagination(nativeQuery, orderBy, paramList, obj, 5);
+                                                       List<Object> paramList, Class<T> obj) {
+        return findPagination(nativeQuery, orderBy, paramList, obj, 10);
     }
 
-    private <T> DataTableResults<T> findPagination(String nativeQuery, String orderBy,
-                                                   List<Object> paramList, Class obj, int limit) {
-        String _search = req.getParameter("_search");
-        SearchParams searchParams = new SearchParams();
-        if (!CommonUtil.isNullOrEmpty(_search)) {
-            searchParams = new Gson().fromJson(_search, SearchParams.class);
+    @Override
+    public <T> List<T> findAllData(String nativeQuery, String orderBy, List<Object> paramList, Class obj) {
+        return findALl(nativeQuery, orderBy, paramList, obj);
+    }
+
+    private <T> DataTableResults<T> findPagination(String nativeQuery,
+                                                   String orderBy,
+                                                   List<Object> paramList,
+                                                   Class<T> resultClass,
+                                                   int defaultLimit) {
+        log.info("[VF DATA IMPL] findPagination");
+
+        // Lấy thông tin tìm kiếm từ request
+        String searchJson = req.getParameter("_search");
+        SearchParams searchParams = CommonUtils.hasText(searchJson)
+                ? new Gson().fromJson(searchJson, SearchParams.class)
+                : new SearchParams();
+
+        // Xây dựng câu truy vấn phân trang và câu truy vấn đếm tổng số dòng
+        String paginatedSql = CommonUtils.buildPaginatedQuery(nativeQuery, orderBy, searchParams);
+        String countSql = CommonUtils.buildCountQuery(nativeQuery);
+
+        // Tạo NativeQuery
+        NativeQuery query = createNativeQuery(paginatedSql);
+        setResultTransformer(query, resultClass);
+        query.setFirstResult(CommonUtils.NVL(searchParams.getFirst()));
+        query.setMaxResults(CommonUtils.NVL(searchParams.getRows(), defaultLimit));
+
+        NativeQuery<?> countQuery = createNativeQuery(countSql);
+
+        // Gán parameter cho cả query và countQuery nếu có
+        if (!CommonUtils.isNullOrEmpty(paramList)) {
+            for (int i = 0; i < paramList.size(); i++) {
+                Object value = paramList.get(i);
+                query.setParameter(i + 1, value);
+                countQuery.setParameter(i + 1, value);
+            }
         }
-        String paginatedQuery = CommonUtil.buildPaginatedQuery(nativeQuery, orderBy, searchParams);
-        String countStrQuery = CommonUtil.buildCountQuery(nativeQuery);
-        SQLQuery query = createSQLQuery(paginatedQuery);
+
+        // Thực thi truy vấn
+        List<T> dataList = query.getResultList();
+        Object totalRecords = countQuery.uniqueResult();
+
+        // Gán dữ liệu vào DataTableResults
+        DataTableResults<T> result = new DataTableResults<>();
+        result.setData(dataList);
+
+        boolean hasData = !CommonUtils.isEmpty(dataList);
+        result.setRecordsTotal(hasData ? String.valueOf(totalRecords) : "0");
+        result.setRecordsFiltered(result.getRecordsTotal());
+        result.setFirst(String.valueOf(CommonUtils.NVL(searchParams.getFirst())));
+
+        return result;
+    }
+
+
+    private <T> List<T> findALl(String nativeQuery, String orderBy,
+                                                   List<Object> paramList, Class obj) {
+        log.info("[VF DATA IMPL] findALl");
+        String paginatedQuery = CommonUtils.buildPaginatedQuery(nativeQuery, orderBy, null);
+        String countStrQuery = CommonUtils.buildCountQuery(nativeQuery);
+        NativeQuery query = createNativeQuery(paginatedQuery);
         setResultTransformer(query, obj);
         // pagination
-        query.setFirstResult(CommonUtil.NVL(searchParams.getFirst()));
-        query.setMaxResults(CommonUtil.NVL(searchParams.getRows(), limit));
-        SQLQuery countQuery = createSQLQuery(countStrQuery);
-        if (!CommonUtil.isNullOrEmpty(paramList)) {
+        NativeQuery countQuery = createNativeQuery(countStrQuery);
+        if (!CommonUtils.isNullOrEmpty(paramList)) {
             int paramSize = paramList.size();
             for (int i = 0; i < paramSize; i++) {
                 countQuery.setParameter(i + 1, paramList.get(i));
                 query.setParameter(i + 1, paramList.get(i));
             }
         }
+        @SuppressWarnings("unchecked")
         List<T> userList = query.list();
-        Object totalRecords = countQuery.uniqueResult();
 
-        DataTableResults<T> dataTableResult = new DataTableResults<T>();
-        dataTableResult.setData(userList);
-        if (!CommonUtil.isEmpty(userList)) {
-            dataTableResult.setRecordsTotal(String.valueOf(totalRecords));
-            dataTableResult.setRecordsFiltered(String.valueOf(totalRecords));
-            dataTableResult.setFirst(String.valueOf(CommonUtil.NVL(searchParams.getFirst())));
-        } else {
-            dataTableResult.setRecordsFiltered("0");
-            dataTableResult.setRecordsTotal("0");
-        }
-
-        return dataTableResult;
+        return userList;
     }
-
 
 }

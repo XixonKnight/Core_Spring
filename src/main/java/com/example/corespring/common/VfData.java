@@ -1,21 +1,15 @@
 package com.example.corespring.common;
 
-import domain.DataTableResults;
-import org.hibernate.SQLQuery;
+import com.example.corespring.domain.DataTableResults;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
-/**
- * Created by Nhan Nguyen on 5/19/2021
- *
- * @author Nhan Nguyen
- * @date 5/19/2021
- */
 public interface VfData {
     public <T> DataTableResults<T>
     findPaginationQuery(String nativeQuery, String nativeQueryCount,
-                        String orderBy, List<Object> paramList, Class obj);
+                        String orderBy, List<Object> paramList, Class<T> obj);
 
     /**
      *
@@ -23,12 +17,21 @@ public interface VfData {
      * @param orderBy
      * @param paramList
      * @param obj
-     * @param <T>
      * @return
+     * @param <T>
      */
-    public <T> DataTableResults<T> findPaginationQuery(String nativeQuery, String orderBy,
-                                                       List<Object> paramList, Class obj);
-//    public <T> DataTableResults<T> findPaginationQuery(String nativeQuery, String orderBy, Map<String, String> paramList, Class obj);
+    public <T> DataTableResults<T> findPaginationQuery(String nativeQuery, String orderBy, List<Object> paramList, Class<T> obj);
+
+    /**
+     *
+     * @param nativeQuery
+     * @param orderBy
+     * @param paramList
+     * @param obj
+     * @return
+     * @param <T>
+     */
+    public <T> List<T> findAllData(String nativeQuery, String orderBy, List<Object> paramList, Class obj);
 
 
     /**
@@ -37,16 +40,15 @@ public interface VfData {
      */
     public Session getSession();
 
-    public SQLQuery createSQLQuery(String sql);
+    public NativeQuery createNativeQuery(String sql);
     /**
      * ham set result transformer cua cau query
      *
      * @param query
      *            cau query
-     * @param obj
      *            doi tuong
      */
-    public void setResultTransformer(SQLQuery query, Class obj);
+    public void setResultTransformer(NativeQuery<?> query, Class<?> targetClass);
 
     /**
      * Get list alias column.
@@ -54,5 +56,5 @@ public interface VfData {
      * @param query
      * @return
      */
-    public List<String> getReturnAliasColumns(SQLQuery query);
+    public List<String> getReturnAliasColumns(NativeQuery query);
 }
