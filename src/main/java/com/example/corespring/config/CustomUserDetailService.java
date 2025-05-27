@@ -1,7 +1,7 @@
 package com.example.corespring.config;
 
-import com.example.corespring.domain.CustomUserDetails;
-import com.example.corespring.domain.make.User;
+import com.example.corespring.core.base.CustomUserDetails;
+import com.example.corespring.core.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

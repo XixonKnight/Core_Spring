@@ -1,4 +1,4 @@
-package com.example.corespring.constants;
+package com.example.corespring.core.constants;
 
 import lombok.experimental.UtilityClass;
 
@@ -81,5 +81,12 @@ public class Constants {
         public static final String DOMAIN_DUPLICATE_CODE = "permission.duplicateDomain";
         public static final String SYNC_TAX_SUCCESS = "syncTax.success";
         public static final String SYNC_TAX_ERROR = "syncTax.error";
+    }
+
+    @UtilityClass
+    public static class FormatDate {
+        public static final String PATTERN_YYYY_MM_DD = "yyyy-MM-dd";
+        public static final String PATTERN_DD_MM = "dd/MM";
+        public static final String PATTERN_DD_MM_YYYY = "dd/MM/yyyy";
     }
 }

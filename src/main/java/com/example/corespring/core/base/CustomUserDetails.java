@@ -1,8 +1,8 @@
-package com.example.corespring.domain;
+package com.example.corespring.core.base;
 
 
-import com.example.corespring.domain.make.Role;
-import com.example.corespring.domain.make.User;
+import com.example.corespring.core.entity.Roles;
+import com.example.corespring.core.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +23,7 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : user.getRoleSet()) {
+        for (Roles role : user.getRoleSet()) {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
         return authorities;

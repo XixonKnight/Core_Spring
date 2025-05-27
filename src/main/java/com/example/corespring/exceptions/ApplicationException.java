@@ -1,7 +1,7 @@
 package com.example.corespring.exceptions;
 
 
-import com.example.corespring.enums.ErrorCodes;
+import com.example.corespring.core.enums.ErrorCodes;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

@@ -18,12 +18,14 @@
         <java.version>17</java.version>
         <version.gson>2.8.5</version.gson>
         <org.apache.poi.version>5.2.5</org.apache.poi.version>
+        <commons.configuration2.version>2.10.1</commons.configuration2.version>
         <lombok.version>1.18.30</lombok.version>
         <hibernate.version>6.4.4.Final</hibernate.version>
         <minio.version>8.5.2</minio.version>
         <jwt.version>0.11.5</jwt.version>
         <cn.hutool.version>5.8.25</cn.hutool.version>
         <mysql.connection.version>8.3.0</mysql.connection.version>
+        <snakeYaml.version>2.0</snakeYaml.version>
     </properties>
 
     <dependencies>
@@ -99,6 +101,17 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql.connection.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>${commons.configuration2.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeYaml.version}</version>
         </dependency>
     </dependencies>
 

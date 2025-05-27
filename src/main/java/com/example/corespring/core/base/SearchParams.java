@@ -1,4 +1,4 @@
-package com.example.corespring.domain;
+package com.example.corespring.core.base;
 
 import com.example.corespring.common.CommonUtils;
 import lombok.Getter;

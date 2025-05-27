@@ -1,6 +1,6 @@
-package com.example.corespring.domain.response;
+package com.example.corespring.core.response;
 
-import com.example.corespring.constants.Constants;
+import com.example.corespring.core.constants.Constants;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.Getter;

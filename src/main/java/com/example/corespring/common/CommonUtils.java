@@ -1,6 +1,6 @@
 package com.example.corespring.common;
 
-import com.example.corespring.domain.SearchParams;
+import com.example.corespring.core.base.SearchParams;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonPrimitive;
@@ -40,11 +40,13 @@ import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
@@ -57,24 +59,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 @Slf4j
 @UtilityClass
 public class CommonUtils {
-    private static final String[] SIGNED_ARR = new String[]{"à", "á", "ạ", "ả", "ã", "â", "ầ", "ấ", "ậ", "ẩ", "ẫ",
-            "ă", "ằ", "ắ", "ặ", "ẳ", "ẵ", "è", "é", "ẹ", "ẻ", "ẽ", "ê", "ề", "ế", "ệ", "ể", "ễ", "ì", "í", "ị", "ỉ",
-            "ĩ", "ò", "ó", "ọ", "ỏ", "õ", "ô", "ồ", "ố", "ộ", "ổ", "ỗ", "ơ", "ờ", "ớ", "ợ", "ở", "ỡ", "ù", "ú", "ụ",
-            "ủ", "ũ", "ư", "ừ", "ứ", "ự", "ử", "ữ", "ỳ", "ý", "ỵ", "ỷ", "ỹ", "đ", "À", "Á", "Ạ", "Ả", "Ã", "Â", "Ầ",
-            "Ấ", "Ậ", "Ẩ", "Ẫ", "Ă", "Ằ", "Ắ", "Ặ", "Ẳ", "Ẵ", "È", "É", "Ẹ", "Ẻ", "Ẽ", "Ê", "Ề", "Ế", "Ệ", "Ể", "Ễ",
-            "Ì", "Í", "Ị", "Ỉ", "Ĩ", "Ò", "Ó", "Ọ", "Ỏ", "Õ", "Ô", "Ồ", "Ố", "Ộ", "Ổ", "Ỗ", "Ơ", "Ờ", "Ớ", "Ợ", "Ở",
-            "Ỡ", "Ù", "Ú", "Ụ", "Ủ", "Ũ", "Ư", "Ừ", "Ứ", "Ự", "Ử", "Ữ", "Ỳ", "Ý", "Ỵ", "Ỷ", "Ỹ", "Đ"};
-    private static final String[] UNSIGNED_ARR = new String[]{"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
-            "a", "a", "a", "a", "a", "a", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "i", "i", "i", "i",
-            "i", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "u", "u", "u",
-            "u", "u", "u", "u", "u", "u", "u", "u", "y", "y", "y", "y", "y", "d", "A", "A", "A", "A", "A", "A", "A",
-            "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E",
-            "I", "I", "I", "I", "I", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O",
-            "O", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "Y", "Y", "Y", "Y", "Y", "D"};
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final String UNICODE = "ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệếìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵý";
@@ -163,8 +152,6 @@ public class CommonUtils {
         }
 
     }
-
-
 
     /**
      * Lay xau gia tri tu file ApplicationResources.properties.
@@ -832,46 +819,6 @@ public class CommonUtils {
             return null;
         }
     }
-
-    /**
-     * ham tra lai prefix dia chi email theo dinh dang chuan
-     *
-     * @param fullName ten nhap vao
-     * @return phan prefix cua dia chi email Nguyen van bien --> result biennv
-     */
-    public static String getPrefixEmailByFullName(String fullName) {
-        StringBuilder emailResult = new StringBuilder();
-        if (hasText(fullName)) {
-            fullName = removeSign(fullName);
-            String[] str = fullName.trim().split(" ");
-            int strLen = str.length;
-            emailResult = new StringBuilder(str[strLen - 1]);
-            for (int i = 0; i < strLen - 1; i++) {
-                String subStr = str[i].trim();
-                if (hasText(subStr)) {
-                    emailResult.append(subStr.charAt(0));
-                }
-            }
-        }
-        return emailResult.toString().toLowerCase();
-    }
-
-    /**
-     * Loai bo cac dau, ten file chi chua cac ky tu ASCII.
-     *
-     * @param originalName
-     * @return String : xau sau khi bo dau
-     */
-    public static String removeSign(String originalName) {
-        if (hasText(originalName)) {
-            String result = originalName;
-            for (int i = 0; i < SIGNED_ARR.length; i++) {
-                result = result.replaceAll(SIGNED_ARR[i], UNSIGNED_ARR[i]);
-            }
-        }
-        return originalName;
-    }
-
 
     /**
      * Loai cac ki tu /, \, null trong ten file Fix loi path traversal

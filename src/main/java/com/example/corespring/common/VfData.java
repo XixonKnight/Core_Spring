@@ -1,6 +1,6 @@
 package com.example.corespring.common;
 
-import com.example.corespring.domain.DataTableResults;
+import com.example.corespring.core.base.DataTableResults;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 

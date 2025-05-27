@@ -2,8 +2,8 @@ package com.example.corespring.exceptions;
 
 
 import com.example.corespring.common.CommonUtils;
-import com.example.corespring.constants.Constants;
-import com.example.corespring.domain.response.Response;
+import com.example.corespring.core.constants.Constants;
+import com.example.corespring.core.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

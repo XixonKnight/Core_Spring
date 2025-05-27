@@ -1,0 +1,353 @@
+- code: STT
+  header:
+      - STT
+  required: false
+  type: Integer
+
+- code: PROVINCE_CODE
+  header:
+      - Mã Tỉnh/Thành Phố
+  required: true
+  type: String
+
+- code: PROVINCE_NAME
+  header:
+      - Tên Tỉnh/Thành Phố
+  required: true
+  type: String
+
+- code: BCCP
+  header:
+    - Tháng 1
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 1
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 1
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 1
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 2
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 2
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 2
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 2
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 3
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 3
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 3
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 3
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 4
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 4
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 4
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 4
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 5
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 5
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 5
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 5
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 6
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 6
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 6
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 6
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 7
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 7
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 7
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 7
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 8
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 8
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 8
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 8
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 9
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 9
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 9
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 9
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 10
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 10
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 10
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 10
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 11
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 11
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 11
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 11
+    - HCC
+  required: true
+  type: BigDecimal
+
+- code: BCCP
+  header:
+    - Tháng 12
+    - BCCP
+  required: true
+  type: BigDecimal
+
+- code: TCBC
+  header:
+    - Tháng 12
+    - TCBC
+  required: true
+  type: BigDecimal
+
+- code: TDPP
+  header:
+    - Tháng 12
+    - TDPP
+  required: true
+  type: BigDecimal
+
+- code: HCC
+  header:
+    - Tháng 12
+    - HCC
+  required: true
+  type: BigDecimal

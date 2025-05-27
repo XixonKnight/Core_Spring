@@ -2,7 +2,7 @@ package com.example.corespring.exceptions;
 
 
 import com.example.corespring.common.CommonUtils;
-import com.example.corespring.domain.response.Response;
+import com.example.corespring.core.response.Response;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
