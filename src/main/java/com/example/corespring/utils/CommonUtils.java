@@ -1,4 +1,4 @@
-package com.example.corespring.common;
+package com.example.corespring.utils;
 
 import com.example.corespring.core.base.SearchParams;
 import com.google.gson.Gson;
@@ -40,13 +40,11 @@ import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
-import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
@@ -59,7 +57,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 @Slf4j
 @UtilityClass

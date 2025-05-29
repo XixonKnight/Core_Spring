@@ -1,4 +1,4 @@
-package com.example.corespring.common;
+package com.example.corespring.utils;
 
 
 import jakarta.servlet.http.HttpServletRequest;

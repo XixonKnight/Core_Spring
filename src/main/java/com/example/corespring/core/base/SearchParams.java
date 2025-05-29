@@ -1,6 +1,6 @@
 package com.example.corespring.core.base;
 
-import com.example.corespring.common.CommonUtils;
+import com.example.corespring.utils.CommonUtils;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package com.example.corespring.common;
+package com.example.corespring.utils;
 
 import cn.hutool.core.io.FileTypeUtil;
 import lombok.extern.slf4j.Slf4j;

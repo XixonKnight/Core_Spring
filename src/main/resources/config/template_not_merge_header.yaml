@@ -1,0 +1,65 @@
+- code: STT
+  headers:
+    - STT
+  required: false
+  type: Integer
+
+- code: PROVINCE_CODE
+  headers:
+    - Mã BĐT
+  required: true
+  type: String
+
+- code: PROVINCE_NAME
+  headers:
+    - Tên tỉnh/ thành phố
+  required: true
+  type: String
+
+- code: DISTRICT_CODE
+  headers:
+    - Mã quận/huyện/thị xã
+  required: true
+  type: String
+
+- code: DISTRICT_NAME
+  headers:
+    - Tên quận/huyện/thị xã
+  required: true
+  type: String
+
+- code: POSTAL_CODE
+  headers:
+    - Mã Bưu chính
+  required: true
+  type: String
+
+- code: POSTAL_NAME
+  headers:
+    - Tên bưu cục/điểm phục vụ
+  required: true
+  type: String
+
+- code: LEVEL
+  headers:
+    - Cấp
+  required: true
+  type: String
+
+- code: TYPE
+  headers:
+    - Loại bưu cục
+  required: true
+  type: String
+
+- code: STATUS
+  headers:
+    - Trạng thái
+  required: true
+  type: String
+
+- code: EMPLOYEES
+  headers:
+    - Số lượng lao động
+  required: true
+  type: BigDecimal

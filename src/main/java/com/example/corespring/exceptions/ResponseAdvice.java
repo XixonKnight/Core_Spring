@@ -1,7 +1,7 @@
 package com.example.corespring.exceptions;
 
 
-import com.example.corespring.common.CommonUtils;
+import com.example.corespring.utils.CommonUtils;
 import com.example.corespring.core.response.Response;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;

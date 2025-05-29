@@ -1,4 +1,4 @@
-package com.example.corespring.common;
+package com.example.corespring.utils;
 
 import lombok.experimental.UtilityClass;
 
@@ -67,7 +67,8 @@ public class VietnameseTextUtils {
         if (replaceSpecialCharacter) {
             s = s.replace("&", "VA");
         }
-
+        // Bước 1: Loại bỏ ký tự đặc biệt (chỉ giữ chữ cái, số và khoảng trắng)
+        s = s.replaceAll("[^\\p{L}\\p{N}]", " "); // \p{L}: chữ, \p{N}: số
         s = s.replace(" ", " ");
         s = s.replaceAll("\\s+", " ").trim().toUpperCase();
         String temp = Normalizer.normalize(s, Normalizer.Form.NFD);

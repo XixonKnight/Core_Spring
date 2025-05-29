@@ -23,10 +23,13 @@ public enum ErrorCodes {
     //Excel
     HANDLE_READ_EXCEL_ERROR(Constants.ResponseCode.SYSTEM_ERROR, MessageUtils.getMessage("excel.error.processing"), HttpStatus.INTERNAL_SERVER_ERROR),
     FORMAT_HEADER_ERROR(Constants.ResponseCode.BAD_REQUEST, MessageUtils.getMessage("excel.error.header_not_match"), HttpStatus.INTERNAL_SERVER_ERROR),
-    FILE_NOT_FOUND(Constants.ResponseCode.SYSTEM_ERROR, MessageUtils.getMessage("error.file_not_found"), HttpStatus.NOT_FOUND),
+    INVALID_INPUT_DATA_REQUIRED(Constants.ResponseCode.BAD_REQUEST, MessageUtils.getMessage("excel.input.data_required"), HttpStatus.BAD_REQUEST),
 
+
+    FILE_NOT_FOUND(Constants.ResponseCode.SYSTEM_ERROR, MessageUtils.getMessage("file.not_found"), HttpStatus.NOT_FOUND),
     INVALID_FILE(Constants.ResponseCode.BAD_REQUEST, MessageUtils.getMessage("file.invalid"), HttpStatus.BAD_REQUEST),
     INVALID_FILE_FORMAT(Constants.ResponseCode.BAD_REQUEST, MessageUtils.getMessage("file.format_invalid"), HttpStatus.BAD_REQUEST),
+
     ;
 
     String code;
